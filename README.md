@@ -97,7 +97,7 @@ curl -fsSL https://github.com/johnfan12/PortBridge/releases/latest/download/unin
 make check build
 ./bin/portbridge hub --public-url https://你的VPS公网IP:9543
 ./bin/portbridge node
-make release VERSION=v0.1.0
+make release VERSION=v0.1.1
 ```
 
 手动运行默认数据目录 `./data/portbridge/hub` 和 `./data/portbridge/node`，首次管理员密码在 hub 目录。可用 `--data-dir`、`--listen`、`--port-start`、`--port-end` 指定首次配置；已有配置修改需停服并编辑 `config.json`。
