@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PortBridge · 端口转发</title><link rel="stylesheet" href="/style.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <header><a class="brand" href="/">PortBridge<span>端口转发</span></a><div id="toolbar"></div></header>
+  <main>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <section id="loading" class="card">正在连接…</section>
+    <section id="auth" class="card compact" hidden>
+      <h1>登录</h1>
+      <form id="login-form"><label>用户名<input name="username" autocomplete="username" required maxlength="64"></label><label>密码<input name="password" type="password" autocomplete="current-password" required maxlength="72"></label><button type="submit">登录</button><button id="register-button" class="secondary" type="button" hidden>创建账号</button></form>
+    </section>
+    <section id="node-page" hidden>
+      <div class="intro"><h1>节点维护</h1></div>
+      <section class="workspace local-workspace">
+        <div class="workspace-head"><h2>连接状态</h2></div>
+        <div class="workspace-body"><div id="local-status"></div></div>
+        <details class="workspace-section service-settings" id="tcp-services"><summary>授权本机服务端口</summary>
+          <p class="muted">授权本机服务端口后，可在 VPS 控制台创建公网转发。转发开关不影响本机服务进程。</p>
+          <form id="tcp-port-form" class="row"><label>本机服务端口<input name="port" type="number" min="1" max="65535" placeholder="例如 8080" required></label><button type="submit">授权端口</button></form>
+          <div id="tcp-ports"></div><div id="local-tcp-forwarding" class="forwarding-controls"></div>
+        </details>
+        <section id="pair-section" class="workspace-section"><h2>接入控制台</h2><p class="muted">粘贴 VPS 生成的配对链接。</p><form id="pair-form"><label>配对链接<textarea name="link" placeholder="portbridge://pair/…" rows="4" required maxlength="8192" spellcheck="false"></textarea></label><button>配对并连接</button></form></section>
+      </section>
+    </section>
+    <section id="dashboard" hidden>
+      <div class="intro"><h1>端口转发</h1><p class="muted">通过 VPS 访问内网的 Overleaf 或其他 TCP 服务。</p></div>
+      <section id="proxy-pane" class="workspace" hidden>
+        <div class="workspace-head"><div><h2>转发服务</h2><p id="proxy-summary" class="muted"></p></div><button id="proxy-toggle" type="button" aria-expanded="false" aria-controls="proxy-section">创建端口转发</button></div>
+        <section id="proxy-section" class="workspace-section inline-form" hidden>
+          <p class="muted">先在节点维护页授权服务端口，再选择节点创建转发。新节点可在管理页面接入。</p>
+          <form id="proxy-form" class="row">
+            <label>名称<input name="name" placeholder="例如 Overleaf" required maxlength="100"></label>
+            <label>节点<select name="node" required></select></label>
+            <label>本机端口<select name="target_port" required></select></label>
+            <label>公网端口<input name="port" type="number" placeholder="自动分配"></label>
+            <label>访问方式<select name="scheme"><option value="http">HTTP（Overleaf）</option><option value="tcp">其他 TCP 服务</option></select></label>
+            <button type="submit">创建转发</button>
+          </form><p id="proxy-port-range" class="muted"></p>
+        </section><div id="proxies"></div>
+      </section>
+      <section id="readonly-nodes" class="workspace" hidden><div class="workspace-head"><h2>节点状态</h2><span id="node-summary" class="muted"></span></div><div id="nodes"></div><p class="workspace-body muted">转发的创建与访问地址由管理员管理。</p></section>
+    </section>
+  </main>
+</body>
+</html>
